@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Surveys</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no">
+    <meta name="autocomplete" content="off">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="shortcut icon" type="image/png" href="assets/favicon.png">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- Update the navbar section -->
+<nav class="navbar navbar-expand-lg d-block">
+    <div class="container-fluid">
+        <div class="row">
+            <img src='assets/logoNew.png' class="img-fluid logo" alt="Survey Logo" onerror="this.onerror=null; this.src='assets/fallback-logo.png';">
+        </div>
+        <div class="navbar-buttons">
+            <!-- Add the return button -->
+            <button id="return-dashboard" onclick="resetSurvey()" class="nav-return-btn hidden">
+                <i class="fas fa-arrow-left"></i> Return to Dashboard
+            </button>
+            <!-- Existing logout button -->
+            <div id="admin-logout" class="logout-btn-container hidden">
+                <button class="Btn" onclick="adminLogout()">
+                    <div class="sign">
+                        <svg viewBox="0 0 512 512">
+                            <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
+                        </svg>
+                    </div>
+                    <div class="text">Logout</div>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+    <div class="survey-feed container-fluid">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <div id="user-info-container" class="container">
+            <h2>Survey Information</h2>
+            <div class="user-info-form">
+                <select id="department" required>
+                    <option value="" disabled selected>Select Department</option>
+                    <option value="IT">IT</option>
+                    <option value="HR">HR</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Learning and Training">Learning and Training</option>
+                    <option value="Franchise">Franchise</option>
+                    <option value="Sales and Support">Sales and Support</option>
+                    <option value="Product Development">Product Development</option>
+                    <option value="Accounts">Accounts</option>
+                    <option value="Dispatch">Dispatch</option>
+                    <option value="E-commerce">E-commerce</option>
+                    <option value="Executive Assistant">Executive Assistant</option>
+                    <option value="Franchise Sales">Franchise Sales</option>
+                    <option value="Franchise Merchandiser">Franchise Merchandiser</option>
+                    <option value="Franchise Operation">Franchise Operation</option>
+                    <option value="Gold Dept">Gold Dept</option>
+                    <option value="Photography">Photography</option>
+                    <option value="Store">Store</option>
+                    <option value="SNMCC">SNMCC</option>
+                </select>
+                <select id="tenure" required>
+                    <option value="" disabled selected>Select Tenure</option>
+                    <option value="0-6 months">0 - 6 months</option>
+                    <option value="up to 1 year">up to 1 year</option>
+                    <option value="Less than 5 years">Less than 5 years</option>
+                    <option value="more than 5 years">more than 5 years</option>
+                </select>
+                <button onclick="startSurvey()" class="start-button">Start Survey</button>
+                <p class="admin-link">
+                    <a href="#" onclick="showAdminLogin()">Admin</a>
+                </p>
+            </div>
+        </div>
+
+        <div id="admin-login-container" class="container hidden">
+            <h2>Admin Login</h2>
+            <div class="login-form">
+                <input type="text" id="admin-username" placeholder="Admin Username" autocomplete="off"/>
+                <div class="password-container">
+                    <input type="password" id="admin-password" placeholder="Password" autocomplete="off"/>
+                    <button type="button" class="password-toggle" onclick="togglePassword('admin-password')">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <button class="btn" onclick="adminLogin()">Login</button>
+                <p class="form-footer">
+                    <button onclick="showUserForm()" class="link-button">Back to Survey</button>
+                </p>
+            </div>
+        </div>
+
+        <div id="admin-panel" class="container hidden">
+            <h2>Create Survey</h2>
+            <div class="survey-form">
+                <input type="text" id="survey-title" placeholder="Survey Title" />
+                <div class="color-picker-container">
+                    <label for="survey-color">Survey Card Color:</label>
+                    <input type="color" id="survey-color" value="#253074">
+                </div>
+                <div class="all-departments-option">
+                    <label>
+                        <input type="checkbox" id="all-departments-checkbox" onchange="toggleDepartmentSelect()">
+                        All Departments
+                    </label>
+                </div>
+                <select id="admin-department">
+                    <option value="" disabled selected>Select Department</option>
+                    <option value="IT">IT</option>
+                    <option value="HR">HR</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Learning and Training">Learning and Training</option>
+                    <option value="Franchise">Franchise</option>
+                    <option value="Sales and Support">Sales and Support</option>
+                    <option value="Product Development">Product Development</option>
+                    <option value="Accounts">Accounts</option>
+                    <option value="Dispatch">Dispatch</option>
+                    <option value="E-commerce">E-commerce</option>
+                    <option value="Executive Assistant">Executive Assistant</option>
+                    <option value="Franchise Sales">Franchise Sales</option>
+                    <option value="Franchise Merchandiser">Franchise Merchandiser</option>
+                    <option value="Franchise Operation">Franchise Operation</option>
+                    <option value="Gold Dept">Gold Dept</option>
+                    <option value="Photography">Photography</option>
+                    <option value="Store">Store</option>
+                    <option value="SNMCC">SNMCC</option>    
+                </select>
+                <div id="questions-container">
+                    <div class="question-input">
+                        <input type="text" placeholder="Question" class="question" />
+                        <select class="question-type">
+                            <option value="text">Text</option>
+                            <option value="radio">Multiple Choice</option>
+                            <option value="checkbox">Checkbox</option>
+                            <option value="star">Star Rating</option>
+                        </select>
+                        <button onclick="addOptions(this)">Add Options</button>
+                        <button onclick="deleteQuestion(this)" class="delete-btn">❌</button>
+                    </div>
+                </div>
+                <div class="survey-actions">
+                    <button onclick="addQuestion()" class="action-button">Add Question</button>
+                    <button onclick="createSurvey()" class="action-button">Create Survey</button>
+                    <button onclick="exportResponses()" class="action-button">Export Responses</button>
+                    <button onclick="generateAnalysis(event)" class="action-button">Generate Analysis</button>
+                </div>
+            </div>
+            <div class="surveys-list">
+                <h3>Department Surveys</h3>
+                <div id="department-surveys"></div>
+            </div>
+        </div>
+
+        <div id="employee-panel" class="container hidden">
+            
+            <div class="survey-form">
+                <h2>KISNA Employee Pulse Survey 2025</h2>
+                <div id="available-surveys"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add the toggleDepartmentSelect function
+        function toggleDepartmentSelect() {
+            const checkbox = document.getElementById('all-departments-checkbox');
+            const departmentSelect = document.getElementById('admin-department');
+            
+            if (checkbox.checked) {
+                departmentSelect.disabled = true;
+                departmentSelect.style.opacity = '0.5';
+            } else {
+                departmentSelect.disabled = false;
+                departmentSelect.style.opacity = '1';
+            }
+        }
+    </script>
+</body>
+</html>
